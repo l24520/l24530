@@ -24,14 +24,24 @@
     <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
     <div class="post-title">
         <p>
-            mac系统修改系统文件只读权限
+            Linux切换php版本
         </p>
         <hr>
     </div>
     <div class="post-content">
-        <p>mac 系统 修改系统文件 failed to open stream: Read-only file system</p>
-<p>只要执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -uw /</span><br></pre></td></tr></table></figure>
+        <ul>
+<li><em><strong>以下只是举例说明，请自行修改相关版本</strong></em></li>
+</ul>
+<hr>
+<h3 id="禁用php7-4模块"><a href="#禁用php7-4模块" class="headerlink" title="禁用php7.4模块"></a>禁用php7.4模块</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2dismod php7.4</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启php8-1模块"><a href="#开启php8-1模块" class="headerlink" title="开启php8.1模块"></a>开启php8.1模块</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod php8.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="将8-1设置成默认版本"><a href="#将8-1设置成默认版本" class="headerlink" title="将8.1设置成默认版本"></a>将8.1设置成默认版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --set php /usr/bin/php8.1</span><br><span class="line"><span class="meta">#</span><span class="bash">或者使用以下命令实现选择默认版本</span></span><br><span class="line">sudo update-alternatives --config php</span><br></pre></td></tr></table></figure>
+
+<h3 id="如果有安装其它扩展可以将已经安装的扩展设置成默认"><a href="#如果有安装其它扩展可以将已经安装的扩展设置成默认" class="headerlink" title="如果有安装其它扩展可以将已经安装的扩展设置成默认"></a>如果有安装其它扩展可以将已经安装的扩展设置成默认</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --set phar /usr/bin/phar8.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="最后重启web服务"><a href="#最后重启web服务" class="headerlink" title="最后重启web服务"></a>最后重启web服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
 
     </div>
 
