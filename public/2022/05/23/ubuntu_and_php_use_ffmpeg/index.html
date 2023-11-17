@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        郭富荣
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            Ubuntu安装视频处理软件FFmpeg以及php使用FFmpeg
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h1 id="第一步-首先安装必要扩展"><a href="#第一步-首先安装必要扩展" class="headerlink" title="第一步/首先安装必要扩展"></a>第一步/首先安装必要扩展</h1><ul>
+<li>使用 apt install 进行安装</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc</span><br><span class="line">make</span><br><span class="line">yasm</span><br><span class="line">libsdl1.2-dev</span><br><span class="line">libstl2-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="第二步-去FFmpeg官网下载ffmpeg"><a href="#第二步-去FFmpeg官网下载ffmpeg" class="headerlink" title="第二步/去FFmpeg官网下载ffmpeg"></a>第二步/去<a target="_blank" rel="noopener" href="http://ffmpeg.org/">FFmpeg官网</a>下载ffmpeg</h1><p>官网地址: <a href="%5Bhttp://ffmpeg.org/%5D()">http://ffmpeg.org/</a></p>
+<h1 id="第三步-编译安装FFmpeg"><a href="#第三步-编译安装FFmpeg" class="headerlink" title="第三步/编译安装FFmpeg"></a>第三步/编译安装FFmpeg</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf ffmpeg_4.4.2.orig.tar.xz</span><br><span class="line">cd ffmpeg-4.4.2</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install </span><br></pre></td></tr></table></figure>
+
+<h1 id="第四步-安装完成后进行测试"><a href="#第四步-安装完成后进行测试" class="headerlink" title="第四步/安装完成后进行测试"></a>第四步/安装完成后进行测试</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -version</span><br><span class="line">返回结果</span><br><span class="line">ffmpeg version 4.4.2 Copyright (c) 2000-2021 the FFmpeg developers</span><br><span class="line">built with gcc 9 (Ubuntu 9.3.0-17ubuntu1~20.04)</span><br><span class="line">configuration:</span><br><span class="line">libavutil      56. 70.100 / 56. 70.100</span><br><span class="line">libavcodec     58.134.100 / 58.134.100</span><br><span class="line">libavformat    58. 76.100 / 58. 76.100</span><br><span class="line">libavdevice    58. 13.100 / 58. 13.100</span><br><span class="line">libavfilter     7.110.100 /  7.110.100</span><br><span class="line">libswscale      5.  9.100 /  5.  9.100</span><br><span class="line">libswresample   3.  9.100 /  3.  9.100</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h2><ul>
+<li>FFmpeg常用命令参数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-c：指定编码器</span><br><span class="line">-c copy：直接复制，不经过重新编码（这样比较快）</span><br><span class="line">-c:v：指定视频编码器</span><br><span class="line">-c:a：指定音频编码器</span><br><span class="line">-i：指定输入文件</span><br><span class="line">-an：去除音频流</span><br><span class="line">-vn： 去除视频流</span><br><span class="line">-preset：指定输出的视频质量，会影响文件的生成速度，有以下几个可用的值 ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow。</span><br><span class="line">-y：不经过确认，输出时直接覆盖同名文件。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看视频元信息</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分离视频音频流</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input_file -vcodec copy -an output_file_video　　//分离视频流 </span><br><span class="line">ffmpeg -i input_file -acodec copy -vn output_file_audio　　//分离音频流</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>视频转码</li>
+</ul>
+<p><em>转换编码格式（transcoding）指的是， 将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器libx264，所以只需指定输出文件的视频编码器即可。</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i [input.file] -c:v libx264 output.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>改变分辨率</li>
+</ul>
+<p><em>从1080p转到480p</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4 -vf scale=480:-1 output.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加音轨</li>
+</ul>
+<p><em>添加音轨（muxing）指的是，将外部音频加入视频，比如添加背景音乐或旁白。</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.aac -i input.mp4 output.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取视频截图</li>
+</ul>
+<p><em>-ss 01:23:45表示截取的时间戳， -vframes 1指定只截取一帧，-q:v 2表示输出的图片质量，一般是1到5之间（1 为质量最高）</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg  -ss 01:23:45  -i input  -vframes 1 -q:v 2  output.jpg</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为音频添加封面</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -loop 1 -i cover.jpg -i input.mp3 -c:v libx264 -c:a aac -b:a 192k -shortest output.mp4</span><br></pre></td></tr></table></figure>
+
+<h2 id="在PHP中使用"><a href="#在PHP中使用" class="headerlink" title="在PHP中使用"></a>在PHP中使用</h2><ul>
+<li>exec形式</li>
+<li>视频压缩</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static function reSize($path, $outPath, $toSize)</span><br><span class="line">&#123;</span><br><span class="line">    $shell = &quot;ffmpeg -i &quot; . $path . &quot; -strict -2  -y -fs &quot; . $toSize . &quot;  &quot;. $outPath . &quot; 2&gt;&amp;1&quot;;</span><br><span class="line">    exec($shell, $output, $ret);</span><br><span class="line">    return $ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>视频截图</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static function screenshot($path, $outPath)</span><br><span class="line">&#123;</span><br><span class="line">    $shell = &quot;ffmpeg -i &quot; . $path . &quot; -ss 1 -y -frames:v 1 -q:v 1 &quot; . $outPath . &quot; 2&gt;&amp;1&quot;;</span><br><span class="line">    exec($shell, $output, $ret);</span><br><span class="line">    return $res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>php-ffmpeg扩展</p>
+<p>使用composer安装php-ffmpeg扩展</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require php-ffmpeg/php-ffmpeg</span><br></pre></td></tr></table></figure></li>
+<li><p>基本使用 具体去看github的<a target="_blank" rel="noopener" href="https://github.com/PHP-FFMpeg/PHP-FFMpeg/blob/master/README.md">README.md</a></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">require &#x27;vendor/autoload.php&#x27;;</span><br><span class="line">$ffmpeg = FFMpeg\FFMpeg::create();</span><br><span class="line">$video = $ffmpeg-&gt;open(&#x27;video.mpg&#x27;);</span><br><span class="line">$video</span><br><span class="line">    -&gt;filters()</span><br><span class="line">    -&gt;resize(new FFMpeg\Coordinate\Dimension(320, 240))</span><br><span class="line">    -&gt;synchronize();</span><br><span class="line">$video</span><br><span class="line">    -&gt;frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))</span><br><span class="line">    -&gt;save(&#x27;frame.jpg&#x27;);</span><br><span class="line">$video</span><br><span class="line">    -&gt;save(new FFMpeg\Format\Video\X264(), &#x27;export-x264.mp4&#x27;)</span><br><span class="line">    -&gt;save(new FFMpeg\Format\Video\WMV(), &#x27;export-wmv.wmv&#x27;)</span><br><span class="line">    -&gt;save(new FFMpeg\Format\Video\WebM(), &#x27;export-webm.webm&#x27;);</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+</div>
+    <div class="footer" id="footer">
+  <p>Copyright © 2021 <a class="flink" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>-<a class="flink" target="_blank" rel="noopener" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+    <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+      <input type="checkbox" name="switch" id="update_style">
+      <span class="el-switch-style"></span>
+    </label>
+    <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+  </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="VvOtjUgtepPdGr65qWmkXtOE-9Nh9j0Va">
+<input type="hidden" id="valine_appKey" value="JcpMXdIzqOXzGO9i7B6lRkIn">
+
+<script src="/libs/jquery.min.js"></script>
+
+  
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+    <script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+    
+<script src="/js/js.js"></script>
+
+      <style type="text/css">
+        .v * {
+          color: #698fca;
+        }
+
+        .v .vlist .vcard .vhead .vsys {
+          color: #3a3e4a;
+        }
+
+        .v .vlist .vcard .vh .vmeta .vat {
+          color: #638fd5;
+        }
+
+        .v .vlist .vcard .vhead .vnick {
+          color: #6ba1ff;
+        }
+
+        .v a {
+          color: #8696b1;
+        }
+
+        .v .vlist .vcard .vhead .vnick:hover {
+          color: #669bfc;
+        }
+      </style>
+</body>
+
+</html>
